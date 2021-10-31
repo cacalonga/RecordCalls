@@ -24,10 +24,12 @@ public class CallReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (intent.getStringExtra(TelephonyManager.EXTRA_STATE).equals(TelephonyManager.EXTRA_STATE_OFFHOOK)) {
             AudioManager am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+
             if (!am.isSpeakerphoneOn())
                 am.setSpeakerphoneOn(true);
             int sb2value = am.getStreamMaxVolume(am.STREAM_VOICE_CALL);
             am.setStreamVolume(AudioManager.STREAM_VOICE_CALL, sb2value, 0);
+
             Log.e("PHONESTATE", "answer");
             recording = true;
             Log.d("recording", "value: " + recording);
@@ -52,10 +54,10 @@ public class CallReceiver extends BroadcastReceiver {
             String fileName = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).toString() + "/" + dt.toString()
                     .replace(":", "_").replace(".", "_") + ".amr";
             MediaRecorder recorder = new MediaRecorder();
-            recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            recorder.setAudioSource(MediaRecorder.AudioSource.VOICE_COMMUNICATION);
             recorder.setOutputFormat(MediaRecorder.OutputFormat.AMR_NB);
             recorder.setOutputFile(fileName);
-            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
             try {
                 recorder.prepare();
                 Thread.sleep(500);

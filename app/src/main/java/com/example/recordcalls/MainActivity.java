@@ -13,7 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
-    private String[] permissions = {
+    private final String[] permissions = {
             Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.RECORD_AUDIO,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
